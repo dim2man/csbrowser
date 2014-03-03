@@ -1,4 +1,4 @@
-define(["app"], function(app) {
+define(['app'], function(app) {
   'use strict';
 
   var mainCtrl = app.controller('MainCtrl', function ($scope) {
@@ -10,4 +10,4 @@ define(["app"], function(app) {
   });
 
   return mainCtrl;
-})
+});
