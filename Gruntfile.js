@@ -225,7 +225,6 @@ module.exports = function (grunt) {
         }]
       }
     },
-
     less: {
       options: {
       },
@@ -291,12 +290,15 @@ module.exports = function (grunt) {
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
+        'less:dist',
         'copy:styles'
       ],
       test: [
+        'less:dist',
         'copy:styles'
       ],
       dist: [
+        'less:dist',
         'copy:styles',
         'imagemin',
         'svgmin'

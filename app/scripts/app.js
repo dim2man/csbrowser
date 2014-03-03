@@ -1,12 +1,11 @@
-'use strict';
+define("app", ["angular", "angularRoute"], function(angular) {
+  'use strict';
 
-angular.module('csbrowserApp', [
-  'ngCookies',
-  'ngResource',
-  'ngSanitize',
-  'ngRoute'
-])
-  .config(function ($routeProvider) {
+  var app = angular.module('app', [
+    'ngRoute'
+  ]);
+
+  app.config(function ($routeProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -16,3 +15,6 @@ angular.module('csbrowserApp', [
         redirectTo: '/'
       });
   });
+
+  return app;
+});
