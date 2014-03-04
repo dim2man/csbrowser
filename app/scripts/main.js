@@ -41,9 +41,18 @@ require.config({
 // this tells angular to defer its bootstrap
 window.name = 'NG_DEFER_BOOTSTRAP!';
 
-require(['angular', 'app', 'controllers/main'], function(angular, app) {
+require(['angular', 'app'], function(angular, app) {
   'use strict';
-  angular.element(document.body).ready(function() {
-    angular.resumeBootstrap([app.name]);
+
+  function continueNgBootstrap() {
+    angular.element(document.body).ready(function() {
+      angular.resumeBootstrap([app.name]);
+    });
+  }
+
+  // load all app controllers
+  require(app.getDependentScripts(), function() {
+    continueNgBootstrap();
   });
+
 });
