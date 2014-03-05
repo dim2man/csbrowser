@@ -27,6 +27,11 @@ require.config({
         'angular'
       ]
     },
+    'angular-resource': {
+      deps: [
+        'angular'
+      ]
+    },
     bootstrap: {
       deps: [
         'jquery'
@@ -46,12 +51,12 @@ require(['angular', 'app'], function(angular, app) {
 
   function continueNgBootstrap() {
     angular.element(document.body).ready(function() {
-      angular.resumeBootstrap([app.name]);
+      angular.resumeBootstrap([app.module.name]);
     });
   }
 
   // load all app controllers
-  require(app.getDependentScripts(), function() {
+  require(app.getAllScripts(), function() {
     continueNgBootstrap();
   });
 

@@ -352,7 +352,6 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
-      'jshint:all',
       // 'bower-install',
       'bower',
       'concurrent:server',

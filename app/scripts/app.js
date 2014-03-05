@@ -1,50 +1,41 @@
-define('app', ['jquery', 'angular', 'angular-route'], function($, angular) {
+define('app', ['jquery', 'angular', 'angular-route', 'angular-resource'], function($, angular) {
   'use strict';
 
   // create module
-  var app = angular.module('app', [
-    'ngRoute'
+  var module = angular.module('csBrowser', [
+    'ngRoute', 'ngResource'
   ]);
 
   // define all app services
-  app.services = {
+  var services = {
     clearspending: {}
   };
 
   // generate app services naming data by naming convension
-  for (var svc in app.services) {
-    app.services[svc].name = svc + 'Service';
-    app.services[svc].script = 'services/' + svc;
+  for (var svc in services) {
+    services[svc].name = svc + 'Service';
+    services[svc].script = 'services/' + svc;
   }
 
   // define all module controllers
-  app.controllers = {
+  var controllers = {
     contracts: {
       deflt: true
     }
   };
 
   // generate routing and naming data for controllers by naming convention
-  for (var ctrl in app.controllers) {
-    app.controllers[ctrl].view = 'views/' + ctrl + '.html';
-    app.controllers[ctrl].hash = '/' + ctrl;
-    app.controllers[ctrl].name = ctrl + 'Ctrl';
-    app.controllers[ctrl].script = 'controllers/' + ctrl;
-  }
-
-  // provide a function returning all dependent scripts
-  app.getDependentScripts = function() {
-    return $.map(app.services, getScript).concat($.map(app.controllers, getScript));
-  };
-
-  function getScript(obj) {
-    return obj.script;
+  for (var ctrl in controllers) {
+    controllers[ctrl].view = 'views/' + ctrl + '.html';
+    controllers[ctrl].hash = '/' + ctrl;
+    controllers[ctrl].name = ctrl + 'Ctrl';
+    controllers[ctrl].script = 'controllers/' + ctrl;
   }
 
   // configure routing
-  app.config(function($routeProvider) {
+  module.config(function($routeProvider) {
     var defaultCtrl = null;
-    $.each(app.controllers, function(ctrlKey, ctrl) {
+    $.each(controllers, function(ctrlKey, ctrl) {
       if (ctrl.deflt || defaultCtrl === null) {
         defaultCtrl = ctrl;
       }
@@ -58,5 +49,17 @@ define('app', ['jquery', 'angular', 'angular-route'], function($, angular) {
     });
   });
 
-  return app;
+  // helper function for $.map to return script file path of an object
+  function getScript(obj) {
+    return obj.script;
+  }
+
+  return {
+    module: module,
+    controllers: controllers,
+    services: services,
+    getAllScripts: function() {
+      return $.map(services, getScript).concat($.map(controllers, getScript));
+    }
+  };
 });
