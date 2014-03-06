@@ -1,1 +1,14 @@
-<div>{{contracts}}</div>
+<div>
+    <table class="table" ng-show="contracts.data.length > 0">
+        <thead>
+            <tr>
+                <td ng-repeat="column in columns">{{column.displayName}}</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in contracts.data">
+                <td ng-repeat="column in $parent.columns">{{$parent.row[column.name]}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
