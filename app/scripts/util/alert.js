@@ -3,35 +3,32 @@ define(['jquery', 'bootstrap'], function($) {
   $(function() {
     $after = $('body > nav');
   });
-  var OK=0, INFO=1, WARN=2, ERR=3;
-  function display(type, msg) {
+  function display(type, msg, timeout) {
     if(!$after) return;
-    var typeClass;
-    switch(type) {
-      case OK: typeClass = 'alert-success'; break;
-      case INFO: typeClass = 'alert-info'; break;
-      case WARN: typeClass = 'alert-warning'; break;
-      case ERR: typeClass = 'alert-danger'; break;
-    }
     var $alert = $('<div class="alert alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>');
-    $alert.addClass(typeClass).find('button').after(msg);
+    $alert.addClass(type).find('button').after(msg);
     $after.after($alert);
+    var dismissFunc = dismiss.bind(this, $alert);
+    if(timeout > 0) {
+      setTimeout(dismissFunc, timeout);
+    }
+    return dismissFunc;
   }
-  function dismiss() {
-    $alert.addClass('hidden');
+  function dismiss($alert) {
+    $alert.remove();
   }
   return {
-    ok: function(msg) {
-      display(OK, msg);
+    ok: function(msg, timeout) {
+      return display('alert-success', msg, timeout);
     },
-    info: function(msg) {
-      display(INFO, msg);
+    info: function(msg, timeout) {
+      return display('alert-info', msg, timeout);
     },
-    warn: function(msg) {
-      display(WARN, msg);
+    warn: function(msg, timeout) {
+      return display('alert-warning', msg, timeout);
     },
-    err: function(msg) {
-      display(ERR, msg);
+    err: function(msg, timeout) {
+      return display('alert-danger', msg, timeout);
     }
   };
 });

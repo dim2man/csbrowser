@@ -7,7 +7,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="row in contracts.data">
-                <td ng-repeat="column in $parent.columns">{{$parent.row[column.name]}}</td>
+                <td ng-repeat="column in $parent.columns">{{$parent.row | bypath: column.name}}</td>
             </tr>
         </tbody>
     </table>

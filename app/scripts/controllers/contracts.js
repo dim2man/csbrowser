@@ -11,34 +11,38 @@ define(['app', 'exContracts', 'util/alert'], function(app, testData, alert) {
       // }).success(parseContracts);
 
       $scope.columns = [{
-        displayName: 'ID',
-        name: 'id'
+        displayName: 'Customer',
+        name: 'customer.fullName'
       }, {
-        displayName: 'Reg #',
-        name: 'regNum'
+        displayName: 'Product',
+        name: 'products.product.name'
       }, {
         displayName: 'Price',
         name: 'price'
+      }, {
+        displayName: 'Supplier Name',
+        name: 'suppliers.supplier.organizationName'
       }, {
         displayName: 'Sign Date',
         name: 'signDate'
       }, ];
 
       function parseContracts(data) {
+        dismissReceiving();
         if (typeof data === 'object') {
           data = data.contracts;
         } else {
           alert.err(data);
           return;
         }
-        alert.info('Received ' + data.data.length + ' records from ' + data.total + ' total');
+        alert.info('Received ' + data.data.length + ' records from ' + data.total + ' total', 2000);
         $scope.contracts = data;
         $scope.$digest();
       }
 
-      setTimeout(parseContracts.bind(this, testData), 200);
+      setTimeout(parseContracts.bind(this, testData), 2000);
 
-      alert.info('Receiving contracts');
+      var dismissReceiving = alert.info('Receiving contracts');
 
     }
   ]);

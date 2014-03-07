@@ -6,16 +6,29 @@ define('app', ['jquery', 'angular', 'angular-route', 'angular-resource'], functi
     'ngRoute', 'ngResource'
   ]);
 
+  // common init func
+  function initCommon(obj, nameSuffix, scriptPrefix) {
+    for (var p in obj) {
+      obj[p].name = p + nameSuffix;
+      obj[p].script = scriptPrefix + p;
+    }
+  }
+
+  // define all app filters
+  var filters = {
+    bypath: {}
+  };
+
+  // generate app filters naming data by naming convension
+  initCommon(filters, '', 'filters/');
+
   // define all app services
   var services = {
     clearspending: {}
   };
 
   // generate app services naming data by naming convension
-  for (var svc in services) {
-    services[svc].name = svc + 'Service';
-    services[svc].script = 'services/' + svc;
-  }
+  initCommon(services, 'Service', 'services/');
 
   // define all module controllers
   var controllers = {
@@ -25,11 +38,10 @@ define('app', ['jquery', 'angular', 'angular-route', 'angular-resource'], functi
   };
 
   // generate routing and naming data for controllers by naming convention
+  initCommon(controllers, 'Ctrl', 'controllers/');
   for (var ctrl in controllers) {
     controllers[ctrl].view = 'views/' + ctrl + '.html';
     controllers[ctrl].hash = '/' + ctrl;
-    controllers[ctrl].name = ctrl + 'Ctrl';
-    controllers[ctrl].script = 'controllers/' + ctrl;
   }
 
   // configure routing
@@ -58,8 +70,9 @@ define('app', ['jquery', 'angular', 'angular-route', 'angular-resource'], functi
     module: module,
     controllers: controllers,
     services: services,
+    filters: filters,
     getAllScripts: function() {
-      return $.map(services, getScript).concat($.map(controllers, getScript));
+      return $.map(services, getScript).concat($.map(controllers, getScript)).concat($.map(filters, getScript));
     }
   };
 });
