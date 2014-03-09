@@ -11,22 +11,40 @@ define(['app', 'exContracts', 'util/alert', 'jquery'], function(app, testData, a
         customerregion: '',
         daterange: '',
         pricerange: '',
-        perpage: '20',
+        perpage: 20,
         customerinn: '',
         customerkpp: '',
         supplierinn: '',
-        supplierkpp: ''
+        supplierkpp: '',
+        page: 1
       };
+
+      $scope.perpage = $scope.filter.perpage;
 
       var dismissReceiving;
 
-      $scope.refresh = function() {
+      function refresh() {
         dismissReceiving = alert.info('Receiving contracts');
-        // console.log(JSON.stringify($scope.filter));
-        cs.contracts($.extend({}, $scope.filter, {
-          page: 1
-        })).success(parseContracts);
-        // setTimeout(parseContracts.bind(this, testData), 2000);
+        cs.contracts($scope.filter).success(parseContracts.bind(this, $scope.filter.perpage));
+      };
+
+      $scope.applyFilter = function() {
+        $scope.filter.perpage = parseInt($scope.filter.perpage, 10);
+        if (!($scope.filter.perpage >= 1)) {
+          //keep old value
+          $scope.filter.perpage = $scope.perpage;
+        }
+        $scope.filter.page = 1; //request the first page
+        refresh();
+      };
+
+      $scope.gotoPage = function(page) {
+        if (page < 1 || ($scope.contracts && page > Math.ceil($scope.contracts.total / $scope.filter.perpage))) {
+          alert.err('wrong page requested: ' + page, 2000);
+          return;
+        }
+        $scope.filter.page = page;
+        refresh();
       };
 
       $scope.columns = [{
@@ -46,8 +64,9 @@ define(['app', 'exContracts', 'util/alert', 'jquery'], function(app, testData, a
         name: 'signDate'
       }, ];
 
-      function parseContracts(data) {
+      function parseContracts(perpage, data) {
         dismissReceiving();
+        $scope.perpage = perpage;
         if (typeof data === 'object') {
           data = data.contracts;
         } else {
@@ -56,7 +75,6 @@ define(['app', 'exContracts', 'util/alert', 'jquery'], function(app, testData, a
         }
         alert.info('Received ' + data.data.length + ' records from ' + data.total + ' total', 2000);
         $scope.contracts = data;
-        $scope.$digest();
       }
     }
   ]);

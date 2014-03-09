@@ -16,7 +16,10 @@ define('app', ['jquery', 'angular', 'angular-route', 'angular-resource'], functi
 
   // define all app filters
   var filters = {
-    bypath: {}
+    bypath: {},
+    iftrue: {},
+    topages: {},
+    tooffset: {}
   };
 
   // generate app filters naming data by naming convension
