@@ -1,4 +1,5 @@
 define(['app'], function(app) {
+  'use strict';
   function getPropertyByPath(obj, path) {
     if (typeof path === 'string') {
       return getPropertyByArray(obj, path.split('.'));

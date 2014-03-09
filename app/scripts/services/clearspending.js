@@ -19,8 +19,8 @@ define(['app', 'jquery'], function(app, $) {
         }
         try {
           data = JSON.parse(data);
-        } finally {
-          // if data cannot be parsed - this may indicate server error returned by string - so just return this string
+        } catch(e) {
+          data = ''+e.message;
         }
         return data;
       } else {

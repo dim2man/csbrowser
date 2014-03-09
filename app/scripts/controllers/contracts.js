@@ -1,14 +1,33 @@
-define(['app', 'exContracts', 'util/alert'], function(app, testData, alert) {
+define(['app', 'exContracts', 'util/alert', 'jquery'], function(app, testData, alert, $) {
   'use strict';
 
   app.module.controller(app.controllers.contracts.name, ['$scope', app.services.clearspending.name,
     function($scope, cs) {
 
-      // cs.contracts({
-      //   page: 1,
-      //   perpage: 20,
-      //   customerregion: 52
-      // }).success(parseContracts);
+      $scope.filterSummary = '';
+
+      $scope.filter = {
+        okdp: '',
+        customerregion: '',
+        daterange: '',
+        pricerange: '',
+        perpage: '20',
+        customerinn: '',
+        customerkpp: '',
+        supplierinn: '',
+        supplierkpp: ''
+      };
+
+      var dismissReceiving;
+
+      $scope.refresh = function() {
+        dismissReceiving = alert.info('Receiving contracts');
+        // console.log(JSON.stringify($scope.filter));
+        cs.contracts($.extend({}, $scope.filter, {
+          page: 1
+        })).success(parseContracts);
+        // setTimeout(parseContracts.bind(this, testData), 2000);
+      };
 
       $scope.columns = [{
         displayName: 'Customer',
@@ -39,11 +58,6 @@ define(['app', 'exContracts', 'util/alert'], function(app, testData, alert) {
         $scope.contracts = data;
         $scope.$digest();
       }
-
-      setTimeout(parseContracts.bind(this, testData), 2000);
-
-      var dismissReceiving = alert.info('Receiving contracts');
-
     }
   ]);
 });
