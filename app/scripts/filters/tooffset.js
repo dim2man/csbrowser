@@ -1,21 +1,19 @@
-define(['app'], function(app) {
+define(function() {
   'use strict';
-  app.module.filter(app.filters.tooffset.name, function() {
+  return function() {
     return function(pages, current, offset) {
       var start;
-      if(current < offset) {
+      if (current < offset) {
         start = 0;
-      }
-      else if(current > pages.length - offset) {
-        start = pages.length - offset*2 - 1;
-        if(start < 0) {
+      } else if (current > pages.length - offset) {
+        start = pages.length - offset * 2 - 1;
+        if (start < 0) {
           start = 0;
         }
-      }
-      else {
+      } else {
         start = current - offset;
       }
-      return pages.slice(start, start + offset*2 + 1);
+      return pages.slice(start, start + offset * 2 + 1);
     };
-  });
+  };
 });

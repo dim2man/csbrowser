@@ -1,8 +1,8 @@
-define(['app'], function(app) {
+define(function() {
   'use strict';
-  app.module.filter(app.filters.iftrue.name, function() {
+  return function() {
     return function(input, data) {
       return input ? data : '';
     };
-  });
+  };
 });

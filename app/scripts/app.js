@@ -1,4 +1,17 @@
-define('app', ['jquery', 'angular', 'angular-route', 'angular-resource'], function($, angular) {
+define('app', ['jquery', 'angular', 'angular-route', 'angular-resource',
+  'controllers/contracts',
+  'services/clearspending',
+  'filters/bypath',
+  'filters/iftrue',
+  'filters/tooffset',
+  'filters/topages'
+], function($, angular, angularRoute, angularResource,
+  Contracts,
+  ClearSpending,
+  ByPath,
+  IfTrue,
+  ToOffset,
+  ToPages) {
   'use strict';
 
   // create module
@@ -7,41 +20,53 @@ define('app', ['jquery', 'angular', 'angular-route', 'angular-resource'], functi
   ]);
 
   // common init func
-  function initCommon(obj, nameSuffix, scriptPrefix) {
+  function initCommon(obj, nameSuffix, angularInitFunc) {
     for (var p in obj) {
       obj[p].name = p + nameSuffix;
-      obj[p].script = scriptPrefix + p;
+      angularInitFunc.call(module, obj[p].name, obj[p].constructor);
     }
   }
 
   // define all app filters
   var filters = {
-    bypath: {},
-    iftrue: {},
-    topages: {},
-    tooffset: {}
+    bypath: {
+      constructor: ByPath
+    },
+    iftrue: {
+      constructor: IfTrue
+    },
+    topages: {
+      constructor: ToPages
+    },
+    tooffset: {
+      constructor: ToOffset
+    }
   };
 
-  // generate app filters naming data by naming convension
-  initCommon(filters, '', 'filters/');
+  // create filters
+  initCommon(filters, '', module.filter);
 
   // define all app services
   var services = {
-    clearspending: {}
+    clearspending: {
+      constructor: ClearSpending
+    }
   };
 
-  // generate app services naming data by naming convension
-  initCommon(services, 'Service', 'services/');
+  // create services
+  initCommon(services, 'Service', module.service);
 
   // define all module controllers
   var controllers = {
     contracts: {
-      deflt: true
+      deflt: true,
+      constructor: Contracts
     }
   };
 
-  // generate routing and naming data for controllers by naming convention
-  initCommon(controllers, 'Ctrl', 'controllers/');
+  // create controllers
+  initCommon(controllers, 'Ctrl', module.controller);
+  // generate routing data for controllers by naming convention
   for (var ctrl in controllers) {
     controllers[ctrl].view = 'views/' + ctrl + '.html';
     controllers[ctrl].hash = '/' + ctrl;
@@ -64,18 +89,5 @@ define('app', ['jquery', 'angular', 'angular-route', 'angular-resource'], functi
     });
   });
 
-  // helper function for $.map to return script file path of an object
-  function getScript(obj) {
-    return obj.script;
-  }
-
-  return {
-    module: module,
-    controllers: controllers,
-    services: services,
-    filters: filters,
-    getAllScripts: function() {
-      return $.map(services, getScript).concat($.map(controllers, getScript)).concat($.map(filters, getScript));
-    }
-  };
+  return module;
 });

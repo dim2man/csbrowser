@@ -51,13 +51,13 @@ require(['angular', 'app'], function(angular, app) {
 
   function continueNgBootstrap() {
     angular.element(document.body).ready(function() {
-      angular.resumeBootstrap([app.module.name]);
+      angular.resumeBootstrap([app.name]);
     });
   }
 
   // load all app controllers
-  require(app.getAllScripts(), function() {
+  // require(app.getAllScripts(), function() {
     continueNgBootstrap();
-  });
+  // });
 
 });

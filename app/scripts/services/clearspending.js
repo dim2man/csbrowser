@@ -1,6 +1,7 @@
-define(['app', 'jquery'], function(app, $) {
+define(['jquery'], function($) {
   'use strict';
-  app.module.factory(app.services.clearspending.name, function($http) {
+  // app.module.factory(app.services.clearspending.name,
+  function ClearSpending($http) {
     var serverUrl = 'https://clearspending.p.mashape.com/v1';
     var commonHeaders = {
       'X-Mashape-Authorization': 'dC4qYTKOvp9E2xVuwqSptEOMrmP8EqTt'
@@ -38,5 +39,10 @@ define(['app', 'jquery'], function(app, $) {
         });
       }
     };
-  });
+  }
+
+  ClearSpending.$inject = ['$http'];
+
+  return ClearSpending;
+  // );
 });

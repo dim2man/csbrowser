@@ -7,7 +7,7 @@
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
 
-module.exports = function (grunt) {
+module.exports = function(grunt) {
 
   // Load grunt tasks automatically
   require('load-grunt-tasks')(grunt);
@@ -156,9 +156,6 @@ module.exports = function (grunt) {
       }
     },
 
-
-
-
     // Renames files for browser caching purposes
     rev: {
       dist: {
@@ -230,8 +227,7 @@ module.exports = function (grunt) {
       }
     },
     less: {
-      options: {
-      },
+      options: {},
       dist: {
         files: {
           '.tmp/styles/main.css': '<%= yeoman.app %>/styles/main.less'
@@ -341,11 +337,49 @@ module.exports = function (grunt) {
         configFile: 'karma.conf.js',
         singleRun: true
       }
+    },
+    requirejs: {
+      compile: {
+        options: {
+          baseUrl: '<%= yeoman.app %>/scripts',
+          paths: {
+            requirejs: 'empty:',
+            less: 'empty:',
+            json3: 'empty:',
+            'es5-shim': 'empty:',
+            bootstrap: 'empty:',
+            'angular-scenario': 'empty:',
+            'angular-sanitize': 'empty:',
+            'angular-route': 'empty:',
+            'angular-resource': 'empty:',
+            'angular-mocks': 'empty:',
+            'angular-cookies': 'empty:',
+            angular: 'empty:',
+            jquery: 'empty:'
+          },
+          /*shim: {
+            'angular' : {'exports' : 'angular'},
+            'angularRoute': ['angular'],
+            'angularResource': ['angular'],
+            'angularMocks': {
+              deps:['angular'],
+              'exports':'angular.mock'
+            }
+          },*/
+          mainConfigFile: '<%= yeoman.app %>/scripts/main.js',
+          optimize: 'uglify2',
+          uglify2: {
+            mangle: false
+          },
+          // include: ['angular'],
+          name: 'main',
+          out: '<%= yeoman.dist %>/scripts/main.js'
+        }
+      }
     }
   });
 
-
-  grunt.registerTask('serve', function (target) {
+  grunt.registerTask('serve', function(target) {
     if (target === 'dist') {
       return grunt.task.run(['build', 'connect:dist:keepalive']);
     }
@@ -361,7 +395,7 @@ module.exports = function (grunt) {
     ]);
   });
 
-  grunt.registerTask('server', function () {
+  grunt.registerTask('server', function() {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run(['serve']);
   });
@@ -386,9 +420,10 @@ module.exports = function (grunt) {
     'copy:dist',
     'cdnify',
     'cssmin',
-    'uglify',
+    // 'uglify',
     'rev',
     'usemin',
+    'requirejs',
     'htmlmin'
   ]);
 
