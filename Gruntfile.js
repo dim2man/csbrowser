@@ -268,7 +268,8 @@ module.exports = function(grunt) {
             '.htaccess',
             '*.html',
             'views/{,*/}*.html',
-            'bower_components/**/*',
+            // 'bower_components/**/*',
+            'bower_components/requirejs/require.js',
             'images/{,*/}*.{webp}',
             'fonts/*'
           ]
@@ -342,21 +343,15 @@ module.exports = function(grunt) {
       compile: {
         options: {
           baseUrl: '<%= yeoman.app %>/scripts',
-          paths: {
+          /*paths: {
             requirejs: 'empty:',
-            less: 'empty:',
-            json3: 'empty:',
-            'es5-shim': 'empty:',
             bootstrap: 'empty:',
-            'angular-scenario': 'empty:',
-            'angular-sanitize': 'empty:',
             'angular-route': 'empty:',
             'angular-resource': 'empty:',
             'angular-mocks': 'empty:',
-            'angular-cookies': 'empty:',
             angular: 'empty:',
             jquery: 'empty:'
-          },
+          },*/
           /*shim: {
             'angular' : {'exports' : 'angular'},
             'angularRoute': ['angular'],
@@ -421,7 +416,7 @@ module.exports = function(grunt) {
     'cdnify',
     'cssmin',
     // 'uglify',
-    'rev',
+    // 'rev',
     'usemin',
     'requirejs',
     'htmlmin'
