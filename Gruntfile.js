@@ -393,7 +393,7 @@ module.exports = function(grunt) {
     'concurrent:test',
     'autoprefixer',
     'connect:test',
-    // 'karma'
+    'karma'
   ]);
 
   grunt.registerTask('build', [
@@ -415,8 +415,8 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('default', [
-    'newer:jshint',
-    'test',
+    // 'newer:jshint',
+    // 'test',
     'build'
   ]);
 };
