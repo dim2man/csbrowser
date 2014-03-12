@@ -70,6 +70,7 @@ define(['jquery', 'util/alert'], function($, alert) {
         data = data.contracts;
       } else {
         alert.err(data);
+        $scope.contracts = null;
         return;
       }
       alert.info('Received ' + data.data.length + ' records from ' + data.total + ' total', 2000);
