@@ -5,6 +5,6 @@ before_script:
   - 'npm install -g bower grunt-cli'
   - 'bower install'
 # blacklist
-branches:
-  except:
-    - develop
+#branches:
+#  except:
+#    - develop
