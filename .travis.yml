@@ -5,10 +5,7 @@ before_script:
 - npm install -g bower grunt-cli
 - bower install
 script: grunt
-after_success:
-- git config credential.helper "store --file=.git/credentials"
-- echo "https://${GH_TOKEN}:@github.com" > .git/credentials
-- grunt gh-pages
+after_success: grunt gh-pages:travis
 env:
   global:
-    secure: QOeaxZfElh31USvqQxCtAe1tBl8d9EVLLQgNwz0F5NKj8bkhg3h7LRW+xNR2MorJZNC8Fydhtcjy3WBNuBWx0JeJR/iDplScEQ95PZFeISi+BuZj5IHmpPklkGEbobVqovyR8uW1qMN4resh3FLAxNPkQKgp90KoHJ3Mx9kfN4M=
+  - secure: Wjz736SETcAJS/j+ASteF93FWc2MZ0/3BtbA6go3C0OdXyRXf3548Gl1iNybUvnoYeFvekzNmQ82I7xEEj4R0i/nBRRhgnlDUIuo7j875EIp+FX0O6jsjpkg67tju11XAfISluQFK0fqgJeQ705tz2rr3nSK7HM1Xr9PA/+b+28=
