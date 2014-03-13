@@ -10,4 +10,5 @@ after_success:
 - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
 - grunt gh-pages
 env:
-- secure: QOeaxZfElh31USvqQxCtAe1tBl8d9EVLLQgNwz0F5NKj8bkhg3h7LRW+xNR2MorJZNC8Fydhtcjy3WBNuBWx0JeJR/iDplScEQ95PZFeISi+BuZj5IHmpPklkGEbobVqovyR8uW1qMN4resh3FLAxNPkQKgp90KoHJ3Mx9kfN4M=
+  global:
+    secure: QOeaxZfElh31USvqQxCtAe1tBl8d9EVLLQgNwz0F5NKj8bkhg3h7LRW+xNR2MorJZNC8Fydhtcjy3WBNuBWx0JeJR/iDplScEQ95PZFeISi+BuZj5IHmpPklkGEbobVqovyR8uW1qMN4resh3FLAxNPkQKgp90KoHJ3Mx9kfN4M=
