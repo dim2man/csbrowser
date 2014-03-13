@@ -1,4 +1,4 @@
-# clearspending.ru API browser
+# clearspending.ru API browser [![Build Status](https://travis-ci.org/dim2man/csbrowser.png?branch=master)](https://travis-ci.org/dim2man/csbrowser)
 
 Test project for exploring clearspending.ru API: https://www.mashape.com/infoculture/clearspending-ru-as-russian-government-spending
 
