@@ -307,6 +307,7 @@ module.exports = function(grunt) {
         'gh-pages': {
             options: {
                 base: 'dist',
+                repo: 'https://github.com/dim2man/csbrowser.git',
                 user: {
                   name: 'Grunt task',
                   email: 'no@email.even'
